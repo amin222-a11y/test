@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lange="fa" dir="rtl">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>خلاصه سازی هوشمند </title>
+    <title>خلاصه ساز هوشمند</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1> AI خلاصه سازی متن داخل مرورگر با </h1>
-    <textarea id="input" rows="8" placeholder="متن رو اینجا بچسبون ..."></textarea>
-    <button id="status">خلاصه کن </button> 
-    <p id="output"></p>
+
+    <h1>خلاصه سازی متن داخل مرورگر با AI</h1>
+
+    <textarea
+        id="input"
+        rows="8"
+        placeholder="متن رو اینجا بنویس..."
+    ></textarea>
+
+    <button id="summarizeBtn">خلاصه کن</button>
+
+    <p id="status"></p>
+
     <div id="output"></div>
 
+    <script type="module" src="app.js"></script>
 
-    <script id="module" src="app.js"></script>
 </body>
 </html>

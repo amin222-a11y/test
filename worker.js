@@ -3,12 +3,51 @@ import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers
 let summarizer = null;
 
 self.onmessage = async (event) => {
-    if (event.data.type === 'load') {
-        summarizer = await pipeline('summarization', 'Xenova/distilbart-cnn-6-6');
-        self.postMessage({ type: 'ready' });
-    }
-    if (event.data.type === 'summarize') {
-        const result = await summarizer(event.data.text, { max_new_tokens: 60 });
-        self.postMessage({ type: 'result', text: result[0].summary_text });
+    try {
+
+        // بارگذاری مدل
+        if (event.data.type === 'load') {
+
+            summarizer = await pipeline(
+                'summarization',
+                'Xenova/distilbart-cnn-6-6'
+            );
+
+            self.postMessage({
+                type: 'ready'
+            });
+
+            return;
+        }
+
+        // خلاصه کردن متن
+        if (event.data.type === 'summarize') {
+
+            if (!summarizer) {
+                throw new Error('مدل هنوز آماده نشده است.');
+            }
+
+            const result = await summarizer(
+                event.data.text,
+                {
+                    max_new_tokens: 60
+                }
+            );
+
+            self.postMessage({
+                type: 'result',
+                text: result[0].summary_text
+            });
+
+            return;
+        }
+
+    } catch (error) {
+
+        self.postMessage({
+            type: 'error',
+            message: error.message
+        });
+
     }
 };
